@@ -1,11 +1,11 @@
 import * as z from "zod/v4-mini";
 
-export const locStringSchema = z.record(z.string(), z.string()).check(
-  z.meta({
-    id: "LocString",
-    description: 'maps BCP 47 language tag (e.g. "en", "en-US") -> translation',
-  }),
-);
+export const locStringSchema = z
+  .record(
+    z.string().check(z.meta({ title: "language" })),
+    z.string().check(z.describe('translation for a BCP 47 language tag, e.g. "en", "en-US"')),
+  )
+  .check(z.meta({ id: "LocString", description: "maps language tag -> translation" }));
 export type LocString = z.infer<typeof locStringSchema>;
 
 /** pick the most specific translation for the user's preferred locales. i.e. `en-US`, then `en`. default to first locale in object. */
