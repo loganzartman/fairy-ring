@@ -1,0 +1,72 @@
+{
+  "name": "fairy-ring",
+  "version": "0.0.0",
+  "description": "",
+  "license": "ISC",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./element": {
+      "types": "./dist/element.d.ts",
+      "default": "./dist/element.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "default": "./dist/react.js"
+    },
+    "./vue": {
+      "types": "./dist/vue.d.ts",
+      "default": "./dist/vue.js"
+    },
+    "./solid": {
+      "types": "./dist/solid.d.ts",
+      "default": "./dist/solid.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "changeset": "changeset",
+    "release": "pnpm build && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^3.0.3",
+    "@types/react": "^19.3.0",
+    "oxfmt": "^0.79.0",
+    "oxlint": "^1.94.0",
+    "react": "^19.3.1",
+    "solid-js": "^2.0.1",
+    "tsdown": "^0.23.7",
+    "typescript": "^7.0.2",
+    "vue": "^3.5.45"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "solid-js": "^2.0.0",
+    "vue": "^3.5.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    },
+    "solid-js": {
+      "optional": true
+    }
+  },
+  "packageManager": "pnpm@9.13.2"
+}
