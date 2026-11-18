@@ -6,10 +6,10 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "strict": true,
     "declaration": true,
-    "isolatedDeclarations": true,
+    "isolatedDeclarations": false,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": ["src"]
+  "include": ["src", ".storybook"]
 }

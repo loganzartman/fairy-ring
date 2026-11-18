@@ -1,4 +1,10 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "ignorePatterns": ["dist", "pnpm-lock.yaml", ".changeset/*.md"]
+  "ignorePatterns": [
+    "dist",
+    "pnpm-lock.yaml",
+    ".changeset/*.md",
+    "storybook-static",
+    "**/__screenshots__"
+  ]
 }

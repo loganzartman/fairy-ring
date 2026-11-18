@@ -1,2 +1,6 @@
 node_modules
 dist
+storybook-static
+.vitest
+__screenshots__/**/*-actual-*.png
+__screenshots__/**/*-diff-*.png
