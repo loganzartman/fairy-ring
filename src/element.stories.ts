@@ -6,6 +6,8 @@ import type * as z from "zod/v4-mini";
 import { define } from "./element";
 import type { configSchema } from "./lib";
 
+const CURRENT_PAGE = `${document.location.protocol}//${document.location.host}`;
+
 define();
 
 type ConfigInput = z.input<typeof configSchema>;
@@ -36,7 +38,7 @@ export const Default: StoryObj<Args> = {
       name: { en: "Example ring" },
       sites: [
         { url: "https://example.com", scope: "host" },
-        { url: "http://127.0.0.1:6006", scope: "host" },
+        { url: CURRENT_PAGE, scope: "host" },
         { url: "https://example.org", scope: "host" },
       ],
     },
