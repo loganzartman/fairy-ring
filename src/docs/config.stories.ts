@@ -1,11 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/web-components-vite";
-import hljs from "highlight.js/lib/core";
-import ini from "highlight.js/lib/languages/ini";
 import { html, type TemplateResult } from "lit";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { parse as parseToml } from "smol-toml";
 import * as z from "zod/v4-mini";
-import { configSchema } from "./lib";
+import { code, docsStyles } from "./docs";
+import { configSchema } from "../lib";
 
 type JSONSchema = z.core.JSONSchema.JSONSchema;
 
@@ -77,88 +75,36 @@ random = { en = "random", es = "aleatorio" }
 // fail loudly if the example drifts out of sync with the schema
 configSchema.parse(parseToml(example));
 
-hljs.registerLanguage("ini", ini); // highlight.js's ini grammar covers TOML
-const exampleHtml = hljs.highlight(example, { language: "ini" }).value;
-
-const meta: Meta = { title: "Docs/Config reference", tags: ["!test"] };
+const meta: Meta = {
+  title: "docs/config",
+  tags: ["!test"],
+  // hide the addons panel (controls etc.); nothing to control on a docs page
+  parameters: { options: { showPanel: false } },
+};
 export default meta;
 
-export const ConfigReference: StoryObj = {
-  name: "Config reference",
+export const Config: StoryObj = {
+  name: "config",
   render: () => {
     const { $defs = {}, ...root } = z.toJSONSchema(configSchema, { io: "input" });
-    return html`<style>
-        article {
-          font:
-            15px/1.5 system-ui,
-            sans-serif;
-          max-width: 960px;
-          color: #222;
-        }
-        h2 {
-          font-size: 1.25em;
-          margin: 2em 0 0.5em;
-          scroll-margin-top: 0.5em;
-        }
-        h2:first-child {
-          margin-top: 0;
-        }
-        h2:target {
-          background: #fff3c4;
-          outline: 0.25em solid #fff3c4;
-        }
-        table {
-          border-collapse: collapse;
-          width: 100%;
-        }
-        th,
-        td {
-          border: 1px solid #ddd;
-          padding: 0.4em 0.75em;
-          text-align: left;
-          vertical-align: top;
-        }
-        th {
-          background: #f5f5f5;
-          font-weight: 600;
-        }
-        td:nth-child(-n + 2) {
-          white-space: nowrap;
-        }
-        th:last-child {
-          width: 100%;
-        }
-        code {
-          font-size: 0.9em;
-        }
-        pre {
-          background: #f5f5f5;
-          border: 1px solid #ddd;
-          padding: 0.75em 1em;
-          overflow-x: auto;
-        }
-        .hljs-section {
-          color: #6f42c1;
-          font-weight: 600;
-        }
-        .hljs-attr {
-          color: #005cc5;
-        }
-        .hljs-string {
-          color: #22863a;
-        }
-        .hljs-literal,
-        .hljs-number {
-          color: #d73a49;
-        }
-        .hljs-comment {
-          color: #6a737d;
-        }
-      </style>
+    return html`${docsStyles}
       <article>
-        <h2 id="Example">Example</h2>
-        <pre><code>${unsafeHTML(exampleHtml)}</code></pre>
-        ${section("Config", root)}
+        <h2>configuring fairy-ring</h2>
+        <p>
+          the configuration is written in
+          <a target="_blank" href="https://toml.io/" rel="noopener noreferrer">TOML</a>. you need to
+          host the configuration somewhere public, like on your own website, or a shared website
+          specific to your webring. you could deploy a github pages site and manage the
+          configuration on github.
+        </p>
+        <p>
+          the configuration is provided to the <code>&lt;fairy-ring&gt;</code> element via the
+          <code>config-url</code> attribute.
+        </p>
+      </article>
+      <article>
+        <h2 id="Example">example</h2>
+        ${code(example, "toml")} ${section("Config", root)}
         ${Object.entries($defs).map(([name, s]) => section(name, s as JSONSchema))}
       </article>`;
   },

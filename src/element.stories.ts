@@ -19,6 +19,7 @@ function configUrl(config: ConfigInput): string {
 }
 
 const meta: Meta<Args> = {
+  title: "api/element",
   component: "fairy-ring",
   render: ({ config }) => html`<fairy-ring config-url=${configUrl(config)}></fairy-ring>`,
   // Wait for the config to load so screenshots capture the final state, not "loading".

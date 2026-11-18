@@ -6,6 +6,11 @@ declare global {
 }
 
 const preview: Preview = {
+  parameters: {
+    options: {
+      storySort: { order: ["docs", ["getting started", "config"], "api", "*"] },
+    },
+  },
   afterEach: async ({ canvasElement }) => {
     await globalThis.matchStoryScreenshot?.(canvasElement);
   },
