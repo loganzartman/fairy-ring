@@ -1,5 +1,5 @@
 import { Task } from "@lit/task";
-import { css, html, LitElement } from "lit";
+import { css, html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { fetchConfig, getNext, getPrev, getRandom, logConfigErrors } from "./lib";
 import { defaultErrorString, defaultLoadingString, localize } from "./strings";
@@ -10,6 +10,13 @@ export class FairyRingElement extends LitElement {
       display: flex;
       flex-direction: row;
       gap: 1em;
+
+      &.loading {
+        display: none;
+      }
+      &.error {
+        display: none;
+      }
     }
   `;
 
@@ -31,18 +38,23 @@ export class FairyRingElement extends LitElement {
         pending: () => html`<div class="loading">${localize(defaultLoadingString)}</div>`,
         error: () => html`<div class="error">${localize(defaultErrorString)}</div>`,
         complete: (config) => html`
-          <a class="prev" href=${getPrev(config)?.url ?? ""}
+          ${config.options.cssHref ? html`<link rel="stylesheet" href="${config.options.cssHref}" />` : nothing}
+          <a class="button button--clickable prev" href=${getPrev(config)?.url ?? ""}
             >${localize(config.strings.previous)}</a
           >
           ${
             config.options.homeUrl
-              ? html`<a class="home" href=${config.options.homeUrl}>${config.name}</a>`
-              : html`<div>${localize(config.name)}</div>`
+              ? html`<a class="button button--clickable home" href=${config.options.homeUrl}
+                  >${config.name}</a
+                >`
+              : html`<div class="button home">${localize(config.name)}</div>`
           }
-          <a class="random" href=${getRandom(config)?.url ?? ""}
+          <a class="button button--clickable random" href=${getRandom(config)?.url ?? ""}
             >${localize(config.strings.random)}</a
           >
-          <a class="next" href=${getNext(config)?.url ?? ""}>${localize(config.strings.next)}</a>
+          <a class="button button--clickable next" href=${getNext(config)?.url ?? ""}
+            >${localize(config.strings.next)}</a
+          >
         `,
       })}
     `;

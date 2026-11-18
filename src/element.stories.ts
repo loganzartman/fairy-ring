@@ -4,7 +4,7 @@ import { stringify } from "smol-toml";
 import { expect, waitFor } from "storybook/test";
 import type * as z from "zod/v4-mini";
 import { define } from "./element";
-import type { configSchema } from "./lib";
+import type { configSchema, Site } from "./lib";
 
 const CURRENT_PAGE = `${document.location.protocol}//${document.location.host}`;
 
@@ -17,6 +17,16 @@ type Args = { config: ConfigInput };
 function configUrl(config: ConfigInput): string {
   return `data:application/toml,${encodeURIComponent(stringify(config))}`;
 }
+
+function cssUrl(styles: string): string {
+  return `data:text/css,${encodeURIComponent(styles)}`;
+}
+
+const EXAMPLE_SITES = [
+  { url: "https://example.com", scope: "host" },
+  { url: CURRENT_PAGE, scope: "host" },
+  { url: "https://example.org", scope: "host" },
+] satisfies Site[];
 
 const meta: Meta<Args> = {
   title: "api/element",
@@ -37,11 +47,52 @@ export const Default: StoryObj<Args> = {
     config: {
       version: "0.0",
       name: { en: "Example ring" },
+      sites: EXAMPLE_SITES,
+    },
+  },
+};
+
+export const ConfiguredStylesheet: StoryObj<Args> = {
+  args: {
+    config: {
+      version: "0.0",
+      name: { en: "Example ring" },
       sites: [
         { url: "https://example.com", scope: "host" },
         { url: CURRENT_PAGE, scope: "host" },
         { url: "https://example.org", scope: "host" },
       ],
+      options: {
+        cssHref: cssUrl(`
+          :host {
+            font-family: sans-serif;
+          }
+          a {
+            color: inherit;
+            text-decoration: none;
+          }
+          .button {
+            padding: 0.5em 1em;
+          }
+          .button--clickable {
+            text-decoration: underline dotted;
+          }
+          .prev {
+            background: #8ff;
+            &::before {
+              display: 'inline-block';
+              content: '<- ';
+            }
+          }
+          .next {
+            background: #ff8;
+            &::after {
+              display: 'inline-block';
+              content: ' ->';
+            }
+          }
+        `),
+      },
     },
   },
 };
