@@ -8,46 +8,50 @@ import {
 } from "./strings";
 import { impossible } from "./impossible";
 
-export const siteSchema = z.object({
-  /** where to link to */
-  url: z.url(),
-  /** what part of this link does the site own? */
-  scope: z.enum([
-    /** all of my.example.com */
-    "host",
-    /** just sub-paths of my.example.com/path, not my.example.com/other */
-    "path",
-  ]),
-});
+export const siteSchema = z
+  .object({
+    url: z.url().check(z.describe("where to link to")),
+    scope: z
+      .enum(["host", "path"])
+      .check(
+        z.describe(
+          'what part of this link does the site own? "host": all of my.example.com. "path": just sub-paths of my.example.com/path, not my.example.com/other',
+        ),
+      ),
+  })
+  .check(z.meta({ id: "Site" }));
 export type Site = z.infer<typeof siteSchema>;
 
 export const configSchema = z.object({
-  /** config schema version */
-  version: z.enum(["0.0"]),
-  /** name of this webring */
-  name: locStringSchema,
-  /** list sites in the webring  */
-  sites: z.array(siteSchema),
+  version: z.enum(["0.0"]).check(z.describe("config schema version")),
+  name: z.nonoptional(locStringSchema).check(z.describe("name of this webring")),
+  sites: z.array(siteSchema).check(z.describe("list sites in the webring")),
   options: z.prefault(
-    z.object({
-      /** a homepage for the webring, if one exists */
-      homeUrl: z.optional(z.url()),
-      /** enable the "random" button */
-      showRandom: z._default(z.boolean(), true),
-      /** suggested stylesheet; loaded unless disabled by site developer */
-      cssHref: z.optional(z.url()),
-    }),
+    z
+      .object({
+        homeUrl: z.optional(z.url()).check(z.describe("a homepage for the webring, if one exists")),
+        showRandom: z._default(z.boolean(), true).check(z.describe('enable the "random" button')),
+        cssHref: z
+          .optional(z.url())
+          .check(z.describe("suggested stylesheet; loaded unless disabled by site developer")),
+      })
+      .check(z.meta({ id: "Options" })),
     {},
   ),
   strings: z.prefault(
-    z.object({
-      /** link to the next site */
-      next: z._default(locStringSchema, defaultNextString),
-      /** link to the previous site */
-      previous: z._default(locStringSchema, defaultPrevString),
-      /** link to a random site */
-      random: z._default(locStringSchema, defaultRandomString),
-    }),
+    z
+      .object({
+        next: z
+          ._default(locStringSchema, defaultNextString)
+          .check(z.describe("link to the next site")),
+        previous: z
+          ._default(locStringSchema, defaultPrevString)
+          .check(z.describe("link to the previous site")),
+        random: z
+          ._default(locStringSchema, defaultRandomString)
+          .check(z.describe("link to a random site")),
+      })
+      .check(z.meta({ id: "Strings" })),
     {},
   ),
 });

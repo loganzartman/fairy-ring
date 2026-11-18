@@ -1,7 +1,11 @@
 import * as z from "zod/v4-mini";
 
-/** maps BCP 47 language tag (e.g. "en", "en-US") -> translation. */
-export const locStringSchema = z.record(z.string(), z.string());
+export const locStringSchema = z.record(z.string(), z.string()).check(
+  z.meta({
+    id: "LocString",
+    description: 'maps BCP 47 language tag (e.g. "en", "en-US") -> translation',
+  }),
+);
 export type LocString = z.infer<typeof locStringSchema>;
 
 /** pick the most specific translation for the user's preferred locales. i.e. `en-US`, then `en`. default to first locale in object. */
