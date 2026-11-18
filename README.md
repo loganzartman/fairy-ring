@@ -47,3 +47,9 @@ Run storybook:
 ```bash
 pnpm dev
 ```
+
+Update screenshot snapshots (requires Docker):
+
+```bash
+pnpm test:update
+```

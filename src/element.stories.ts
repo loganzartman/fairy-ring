@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/web-components-vite";
 import { html } from "lit";
 import { stringify } from "smol-toml";
+import { expect, waitFor } from "storybook/test";
 import type * as z from "zod/v4-mini";
 import { define } from "./element";
 import type { configSchema } from "./lib";
@@ -18,6 +19,13 @@ function configUrl(config: ConfigInput): string {
 const meta: Meta<Args> = {
   component: "fairy-ring",
   render: ({ config }) => html`<fairy-ring config-url=${configUrl(config)}></fairy-ring>`,
+  // Wait for the config to load so screenshots capture the final state, not "loading".
+  play: async ({ canvasElement }) => {
+    const el = canvasElement.querySelector("fairy-ring");
+    await waitFor(() => {
+      expect(el?.shadowRoot?.querySelector(".prev, .error")).toBeTruthy();
+    });
+  },
 };
 export default meta;
 
