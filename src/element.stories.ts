@@ -7,7 +7,6 @@ import type { configSchema } from "./lib";
 
 define();
 
-// what an author writes (fields with defaults are optional), not the parsed result.
 type ConfigInput = z.input<typeof configSchema>;
 
 type Args = { config: ConfigInput };
