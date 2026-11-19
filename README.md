@@ -24,15 +24,15 @@ use bleeding-edge web tooling to deliver a simple and fun developer and user exp
 
 ## how?
 
+[getting started](https://fairy-ring.loga.nz/?path=/story/docs-getting-started--getting-started)
+
 1. write a fairy-ring config file in TOML and put it on the internet
 2. embed your fairy-ring using a tiny snippet:
 
 ```html
 <script type="module" src="https://cdn.jsdelivr.net/npm/fairy-ring/dist/standalone.js"></script>
-<fairy-ring config-url="https://your-site.example/fairy-ring.toml"></fairy-ring>
+<fairy-ring class="my-ring" config-url="https://my-ring.example/fairy-ring.toml"></fairy-ring>
 ```
-
-or use one of the framework wrappers: React, Vue, SolidJS.
 
 ## development
 

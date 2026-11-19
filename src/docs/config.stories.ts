@@ -64,9 +64,8 @@ url = "https://example.org/~bob/"
 scope = "path"
 
 [strings]
-next = { en = "next →", es = "siguiente →" }
-previous = { en = "← prev", es = "← anterior" }
-random = { en = "random", es = "aleatorio" }
+previous = { en = "backwards", es = "atrás" }
+next = { en = "onwards", es = "adelante" }
 `;
 // fail loudly if the example drifts out of sync with the schema
 configSchema.parse(parseToml(example));

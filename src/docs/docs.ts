@@ -94,7 +94,13 @@ export const docsStyles: TemplateResult = html`<style>
   h2:first-child {
     margin-top: 0;
   }
-  h2:target {
+  h3 {
+    font-size: 1.1em;
+    margin: 1.5em 0 0.5em;
+    scroll-margin-top: 0.5em;
+  }
+  h2:target,
+  h3:target {
     background: var(--target);
     outline: 0.25em solid var(--target);
   }

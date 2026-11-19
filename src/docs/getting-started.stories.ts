@@ -32,31 +32,34 @@ export const GettingStarted: StoryObj = {
       <article>
         <h2>getting started</h2>
         <p>
-          fairy-ring shows navigation for your webring with a tiny code snippet. it needs a
-          configuration file to know what your webring is called, what sites are in it, and even how
-          you want to style it. here's how to build a webring with fairy-ring:
+          fairy-ring shows navigation for your webring with a tiny code snippet. here's how to build
+          a webring with fairy-ring:
         </p>
 
-        <h2>1. write a config</h2>
+        <h3>1. write a config</h3>
         <p>
-          create a TOML file listing the sites in your ring. sites are linked in the order they
-          appear.
+          create a
+          <a target="_blank" rel="noopener noreferrer" href="https://toml.io/">TOML</a> file listing
+          the sites in your ring. sites are linked in the order they appear.
         </p>
         ${code(minimalConfig, "toml")}
-        <p>see ${storyLink("docs-config--config", "config")} for all options.</p>
+        <p>
+          you can configure some other things, too. see
+          ${storyLink("docs-config--config", "config")} for all options.
+        </p>
 
-        <h2>2. host it</h2>
+        <h3>2. host it</h3>
         <p>
           put the file somewhere public, like your own website or a github pages site. if you're
           hosting your own, you need to allow CORS requests from the member sites.
         </p>
 
-        <h2>3. embed it</h2>
+        <h3>3. embed it</h3>
         <p>each member should add this snippet wherever they want to show the ring navigation:</p>
         ${code(
           dedent`
             <script type="module" src="https://cdn.jsdelivr.net/npm/fairy-ring/dist/standalone.js"></script>
-            <fairy-ring config-url="https://your-site.example/fairy-ring.toml"></fairy-ring>
+            <fairy-ring class="my-ring" config-url="https://my-ring.example/fairy-ring.toml"></fairy-ring>
           `,
           "html",
         )}
@@ -64,6 +67,39 @@ export const GettingStarted: StoryObj = {
           fairy-ring figures out which site it's on by matching the page URL against
           <code>sites</code>. the snippet is the same for everyone.
         </p>
+
+        <h3>4. create a theme</h3>
+        <p>
+          fairy-ring comes with only the most bare-bones of styling. you can add more styles using
+          CSS:
+        </p>
+        ${code(
+          dedent`
+            .my-ring::part(link) {
+              padding: 8px;
+            }
+            .my-ring::part(next) {
+              color: purple;
+            }
+          `,
+          "css",
+        )}
+        <p>
+          you can learn more about theming here: ${storyLink("docs-theming--theming", "theming")}.
+        </p>
+        <p>
+          as a ring owner, you can host this in the same place as your .toml file and share it with
+          your ring members:
+        </p>
+        ${code(
+          dedent`
+            <script type="module" src="https://cdn.jsdelivr.net/npm/fairy-ring/dist/standalone.js"></script>
+            <link rel="stylesheet" href="https://my-ring.example/fairy-ring.css">
+            <fairy-ring class="my-ring" config-url="https://my-ring.example/fairy-ring.toml"></fairy-ring>
+          `,
+          "html",
+        )}
+        <p>as a ring member, you can write your own styles too!</p>
 
         <h2>using a bundler</h2>
         <p>install the package and register the element once, then use it like any other tag:</p>
