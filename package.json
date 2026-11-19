@@ -23,6 +23,10 @@
       "types": "./dist/element.d.ts",
       "default": "./dist/element.js"
     },
+    "./lib": {
+      "types": "./dist/lib.d.ts",
+      "default": "./dist/lib.js"
+    },
     "./standalone": "./dist/standalone.js",
     "./react": {
       "types": "./dist/react.d.ts",

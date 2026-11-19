@@ -109,3 +109,69 @@ export const Layout: StoryObj<Args> = {
     <fairy-ring class="stacked" config-url=${configUrl(config)}></fairy-ring>
   `,
 };
+
+export const Icons: StoryObj<Args> = {
+  args: Default.args,
+  render: ({ config }) => html`
+    <style>
+      .icons {
+        --cream: #f3e9d2;
+        --dark: #34302b;
+        width: fit-content;
+        padding: 0.5em 0.75em;
+        border-radius: 999px;
+        background: var(--dark);
+        color: var(--cream);
+
+        & [data-fr="home"] {
+          color: inherit;
+          font-weight: 600;
+        }
+        & :is([data-fr="prev"], [data-fr="random"], [data-fr="next"]) {
+          --icon-size: 0.75em;
+          position: relative;
+          width: 2.25em;
+          height: 2.25em;
+          border: 2px solid currentColor;
+          border-radius: 50%;
+          color: inherit;
+          /* hide the text visually; it stays the accessible name */
+          overflow: hidden;
+          white-space: nowrap;
+          text-indent: 100%;
+
+          &::before {
+            content: "";
+            position: absolute; /* not shifted by text-indent */
+            inset: 0;
+            margin: auto;
+            width: var(--icon-size);
+            height: var(--icon-size);
+            background: currentColor;
+            mask: var(--icon) center / contain no-repeat;
+          }
+          &:hover {
+            background: var(--cream);
+            color: var(--dark);
+          }
+          &:focus-visible {
+            outline: 2px solid var(--cream);
+            outline-offset: 2px;
+          }
+        }
+        & :is([data-fr="prev"], [data-fr="next"]) {
+          --icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><path d='M1 0L10 5L1 10Z'/></svg>");
+        }
+        & [data-fr="prev"]::before {
+          scale: -1 1;
+        }
+        & [data-fr="random"] {
+          /* shuffle: two crossing lines with arrowheads. sized up since it doesn't fill its box */
+          --icon-size: 0.9em;
+          --icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><path d='M0.5 2.5H2.5L5.5 7.5H7M0.5 7.5H2.5L5.5 2.5H7' fill='none' stroke='black' stroke-width='1.5' stroke-linejoin='round'/><path d='M6.75 0.5L9.5 2.5L6.75 4.5ZM6.75 5.5L9.5 7.5L6.75 9.5Z'/></svg>");
+        }
+      }
+    </style>
+    <fairy-ring class="icons" config-url=${configUrl(config)}></fairy-ring>
+  `,
+};

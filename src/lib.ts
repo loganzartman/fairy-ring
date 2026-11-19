@@ -8,6 +8,8 @@ import {
 } from "./strings";
 import { impossible } from "./impossible";
 
+export { localize, type LocString } from "./strings";
+
 export const siteSchema = z
   .object({
     url: z.url().check(z.describe("where to link to")),

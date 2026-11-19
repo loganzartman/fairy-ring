@@ -3,6 +3,7 @@ import hljs from "highlight.js/lib/core";
 import bash from "highlight.js/lib/languages/bash";
 import ini from "highlight.js/lib/languages/ini";
 import javascript from "highlight.js/lib/languages/javascript";
+import css from "highlight.js/lib/languages/css";
 import xml from "highlight.js/lib/languages/xml";
 import { html, type TemplateResult } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
@@ -11,6 +12,7 @@ hljs.registerLanguage("toml", ini); // highlight.js's ini grammar covers TOML
 hljs.registerLanguage("html", xml);
 hljs.registerLanguage("js", javascript);
 hljs.registerLanguage("sh", bash);
+hljs.registerLanguage("css", css);
 
 /**
  * trim blank edges and strip the indentation shared by all lines, so snippets can be indented
@@ -29,7 +31,10 @@ export function dedent(strings: TemplateStringsArray | string, ...values: unknow
 }
 
 /** syntax-highlighted code block */
-export function code(source: string, language: "toml" | "html" | "js" | "sh"): TemplateResult {
+export function code(
+  source: string,
+  language: "toml" | "html" | "js" | "sh" | "css",
+): TemplateResult {
   return html`<pre><code>${unsafeHTML(hljs.highlight(source.trim(), { language }).value)}</code></pre>`;
 }
 
@@ -93,7 +98,11 @@ export const docsStyles: TemplateResult = html`<style>
     color: #6f42c1;
     font-weight: 600;
   }
+  [class^="hljs-selector"] {
+    color: #6f42c1;
+  }
   .hljs-attr,
+  .hljs-attribute,
   .hljs-name,
   .hljs-title {
     color: #005cc5;
