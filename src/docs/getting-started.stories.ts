@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/web-components-vite";
 import { html } from "lit";
 import { parse as parseToml } from "smol-toml";
-import { code, docsStyles, storyLink } from "./docs";
+import { code, dedent, docsStyles, storyLink } from "./docs";
 import { configSchema } from "../lib";
 
 const minimalConfig = `
@@ -22,8 +22,6 @@ configSchema.parse(parseToml(minimalConfig));
 const meta: Meta = {
   title: "docs/getting started",
   tags: ["!test"],
-  // hide the addons panel (controls etc.); nothing to control on a docs page
-  parameters: { options: { showPanel: false } },
 };
 export default meta;
 
@@ -56,10 +54,10 @@ export const GettingStarted: StoryObj = {
         <h2>3. embed it</h2>
         <p>each member should add this snippet wherever they want to show the ring navigation:</p>
         ${code(
-          `
-<script type="module" src="https://cdn.jsdelivr.net/npm/fairy-ring/dist/standalone.js"></script>
-<fairy-ring config-url="https://your-site.example/fairy-ring.toml"></fairy-ring>
-`,
+          dedent`
+            <script type="module" src="https://cdn.jsdelivr.net/npm/fairy-ring/dist/standalone.js"></script>
+            <fairy-ring config-url="https://your-site.example/fairy-ring.toml"></fairy-ring>
+          `,
           "html",
         )}
         <p>
@@ -71,11 +69,11 @@ export const GettingStarted: StoryObj = {
         <p>install the package and register the element once, then use it like any other tag:</p>
         ${code("pnpm install fairy-ring", "sh")}
         ${code(
-          `
-import { define } from "fairy-ring/element";
+          dedent`
+            import { define } from "fairy-ring/element";
 
-define(); // registers <fairy-ring>
-`,
+            define(); // registers <fairy-ring>
+          `,
           "js",
         )}
       </article>`,

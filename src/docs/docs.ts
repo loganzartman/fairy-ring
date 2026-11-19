@@ -12,6 +12,22 @@ hljs.registerLanguage("html", xml);
 hljs.registerLanguage("js", javascript);
 hljs.registerLanguage("sh", bash);
 
+/**
+ * trim blank edges and strip the indentation shared by all lines, so snippets can be indented
+ * to match the surrounding code. use as a tag (dedent`...`) or call it on a string.
+ */
+export function dedent(strings: TemplateStringsArray | string, ...values: unknown[]): string {
+  const text =
+    typeof strings === "string"
+      ? strings
+      : strings.reduce((acc, s, i) => acc + s + (i < values.length ? String(values[i]) : ""), "");
+  const lines = text.replace(/^\s*\n|\s+$/g, "").split("\n");
+  const indent = Math.min(
+    ...lines.filter((l) => l.trim()).map((l) => l.length - l.trimStart().length),
+  );
+  return lines.map((l) => l.slice(indent)).join("\n");
+}
+
 /** syntax-highlighted code block */
 export function code(source: string, language: "toml" | "html" | "js" | "sh"): TemplateResult {
   return html`<pre><code>${unsafeHTML(hljs.highlight(source.trim(), { language }).value)}</code></pre>`;
