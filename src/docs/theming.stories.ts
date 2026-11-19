@@ -5,6 +5,8 @@ import { code, dedent, docsStyles } from "./docs";
 import { configSchema } from "../lib";
 
 const minimalConfig = `
+#:schema https://cdn.jsdelivr.net/npm/fairy-ring/dist/config.schema.json
+
 configVersion = 1
 name = { en = "my webring" }
 

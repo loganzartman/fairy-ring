@@ -9,5 +9,9 @@
 - Follow with a tight bullet list of changes, ordered by impact:
   - Start each top-level bullet with a present-tense verb (`Adds`, `Replaces`, `Drains`) and state only the headline change (plus default, if any).
   - Limit sub-bullets to 1–3 single-sentence details: behavior boundaries, caller-visible changes, and notable tradeoffs. Omit unchanged invariants and details that repeat the intro.
-- Leave out ride-along fixes, validation steps, commit history, passive phrasing, and generated-by footers.
+- Leave out ride-along fixes, validation steps, commit history, passive phrasing, generated-by footers (`🤖 Generated with ...`), and session links.
 - End with `closes #N` when an issue applies.
+
+## Commits
+
+- Attribute AI-assisted commits with a `Co-Authored-By` trailer only. Don't add session links or other trailers.

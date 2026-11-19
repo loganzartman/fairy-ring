@@ -51,7 +51,9 @@ function section(name: string, s: JSONSchema): TemplateResult {
     }`;
 }
 
-const example = `configVersion = 1
+const example = `#:schema https://cdn.jsdelivr.net/npm/fairy-ring/dist/config.schema.json
+
+configVersion = 1
 name = { en = "Example ring", es = "Anillo de ejemplo" }
 homeUrl = "https://ring.example.com"
 
@@ -93,6 +95,10 @@ export const Config: StoryObj = {
         <p>
           the configuration is provided to the <code>&lt;fairy-ring&gt;</code> element via the
           <code>config-url</code> attribute.
+        </p>
+        <p>
+          the <code>#:schema</code> comment at the top lets TOML editors validate and autocomplete
+          the config, e.g. VS Code with Even Better TOML.
         </p>
       </article>
       <article>
