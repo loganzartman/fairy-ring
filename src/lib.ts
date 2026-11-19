@@ -11,9 +11,13 @@ import { impossible } from "./impossible";
 export { localize, type LocString } from "./strings";
 export { renderTemplate } from "./template";
 
+// links render as <a href>. allow only http(s) so a config can't inject javascript: or data:
+// URLs into the embedding page.
+const linkUrlSchema = z.url({ protocol: /^https?$/ });
+
 export const siteSchema = z
   .object({
-    url: z.url().check(z.describe("where to link to")),
+    url: linkUrlSchema.check(z.describe("where to link to")),
     scope: z
       .enum(["host", "path"])
       .check(
@@ -27,11 +31,13 @@ export type Site = z.infer<typeof siteSchema>;
 
 export const configSchema = z.object({
   configVersion: z.union([z.literal(1)]).check(z.describe("config schema version")),
-  name: z.nonoptional(locStringSchema).check(z.describe("name of this webring")),
+  name: z
+    .nonoptional(locStringSchema)
+    .check(z.describe("name of this webring. include in a string with {{name}}.")),
   homeText: z
     ._default(locStringSchema, { und: "{{name}}" })
-    .check(z.describe("text that links to the homepage. defaults to the webring name.")),
-  homeUrl: z.optional(z.url()).check(z.describe("a homepage for the webring, if one exists")),
+    .check(z.describe('text that links to the homepage. defaults to "{{name}}".')),
+  homeUrl: z.optional(linkUrlSchema).check(z.describe("a homepage for the webring, if one exists")),
   sites: z.array(siteSchema).check(z.describe("list sites in the webring")),
   strings: z
     .prefault(
