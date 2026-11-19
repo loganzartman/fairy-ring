@@ -7,6 +7,8 @@ declare global {
 
 const preview: Preview = {
   parameters: {
+    // "Code" tab in the addons panel showing each story's source
+    docs: { codePanel: true },
     options: {
       storySort: { order: ["docs", ["getting started", "config"], "api", "*"] },
     },

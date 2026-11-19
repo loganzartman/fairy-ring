@@ -28,6 +28,18 @@ const meta: Meta<Args> = {
   title: "api/element",
   component: "fairy-ring",
   render: ({ config }) => html`<fairy-ring config-url=${configUrl(config)}></fairy-ring>`,
+  parameters: {
+    docs: {
+      source: {
+        // stories inline the config as a data: URL; show a realistic one in the Code tab
+        transform: (code: string) =>
+          code.replace(
+            /config-url="data:[^"]*"/g,
+            'config-url="https://your-site.example/fairy-ring.toml"',
+          ),
+      },
+    },
+  },
   // Wait for the config to load so screenshots capture the final state, not "loading".
   play: async ({ canvasElement }) => {
     const el = canvasElement.querySelector("fairy-ring");
