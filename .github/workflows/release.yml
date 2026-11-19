@@ -41,10 +41,15 @@ jobs:
           publish: pnpm release
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-      # merge the version PR once CI passes, which publishes it
+      # title the version PR with its version, then merge it once CI passes, which publishes it.
+      # changesets leaves the versioned package.json checked out.
       - if: steps.changesets.outputs.pullRequestNumber
-        run: gh pr merge --auto --squash "${{ steps.changesets.outputs.pullRequestNumber }}"
+        run: |
+          title="release v$(node -p 'require("./package.json").version')"
+          gh pr edit "$PR" --title "$title"
+          gh pr merge "$PR" --auto --squash --subject "$title"
         env:
+          PR: ${{ steps.changesets.outputs.pullRequestNumber }}
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
 
   # Deploys the storybook to GitHub Pages on every push to main.
