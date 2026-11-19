@@ -72,9 +72,15 @@ export const Theming: StoryObj = {
         </p>
         <h2>css selectors</h2>
         <p>
-          fairy-ring renders inside a shadow root, so page styles can't reach its internals by
-          accident. style the element itself with any selector, and its pieces with
-          <code>::part()</code> after that selector, like <code>.my-ring::part(prev)</code>.
+          fairy-ring renders inside a
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM"
+            target="_blank"
+            rel="noopener noreferrer"
+            >shadow DOM</a
+          >, so page styles can't break it by accident, and its own styles can't leak out. you can
+          style the root <code>&lt;fairy-ring&gt;</code> element directly, or target its individual
+          pieces with <code>::part()</code> selectors.
         </p>
         <table>
           <tr>
@@ -85,28 +91,25 @@ export const Theming: StoryObj = {
           <tr>
             <td><code>.my-ring</code></td>
             <td><code>&lt;fairy-ring&gt;</code></td>
-            <td>the container. a grid with areas <code>prev home random next</code>.</td>
+            <td>the container. a grid with areas: <code>prev home random next</code></td>
           </tr>
           <tr>
             <td><code>::part(widget)</code></td>
             <td></td>
             <td>
-              every visible piece: <code>prev</code>, <code>home</code>, <code>random</code>,
-              <code>next</code>.
+              any visible element: <code>prev</code>, <code>home</code>, <code>random</code>,
+              <code>next</code>
             </td>
           </tr>
           <tr>
             <td><code>::part(link)</code></td>
             <td></td>
-            <td>
-              every link: <code>prev</code>, <code>random</code>, <code>next</code>, and
-              <code>home</code> if <code>homeUrl</code> is set.
-            </td>
+            <td>any link</td>
           </tr>
           <tr>
             <td><code>::part(prev)</code></td>
             <td><code>&lt;a&gt;</code></td>
-            <td>link to the previous site.</td>
+            <td>the link to the previous site</td>
           </tr>
           <tr>
             <td><code>::part(home)</code></td>
@@ -116,12 +119,12 @@ export const Theming: StoryObj = {
           <tr>
             <td><code>::part(random)</code></td>
             <td><code>&lt;a&gt;</code></td>
-            <td>link to a random site.</td>
+            <td>the link to a random site</td>
           </tr>
           <tr>
             <td><code>::part(next)</code></td>
             <td><code>&lt;a&gt;</code></td>
-            <td>link to the next site.</td>
+            <td>the link to the next site</td>
           </tr>
           <tr>
             <td><code>::part(loading)</code></td>
