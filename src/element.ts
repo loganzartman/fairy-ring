@@ -2,7 +2,8 @@ import { Task } from "@lit/task";
 import { css, html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { fetchConfig, getNext, getPrev, getRandom, logConfigErrors } from "./lib";
-import { defaultErrorString, defaultLoadingString, localize } from "./strings";
+import { defaultErrorString, defaultLoadingString, type LocString } from "./strings";
+import { renderTemplate } from "./template";
 
 export class FairyRingElement extends LitElement {
   @property({ attribute: "config-url" }) configUrl?: string;
@@ -56,24 +57,28 @@ export class FairyRingElement extends LitElement {
   render() {
     return html`
       ${this.#config.render({
-        pending: () => html`<div part="loading">${localize(defaultLoadingString)}</div>`,
-        error: () => html`<div part="error">${localize(defaultErrorString)}</div>`,
-        complete: (config) => html`
-          <a part="prev link widget" rel="prev" href=${getPrev(config)?.url ?? ""}
-            >${localize(config.strings.previous)}</a
-          >
-          ${
-            config.homeUrl
-              ? html`<a part="home link widget" href=${config.homeUrl}>${localize(config.name)}</a>`
-              : html`<div part="home widget">${localize(config.name)}</div>`
-          }
-          <a part="random link widget" href=${getRandom(config)?.url ?? ""}
-            >${localize(config.strings.random)}</a
-          >
-          <a part="next link widget" rel="next" href=${getNext(config)?.url ?? ""}
-            >${localize(config.strings.next)}</a
-          >
-        `,
+        pending: () => html`<div part="loading">${renderTemplate(defaultLoadingString, {})}</div>`,
+        error: () => html`<div part="error">${renderTemplate(defaultErrorString, {})}</div>`,
+        complete: (config) => {
+          const r = (s: LocString) => renderTemplate(s, { name: config.name });
+
+          return html`
+            <a part="prev link widget" rel="prev" href=${getPrev(config)?.url ?? ""}
+              >${r(config.strings.previous)}</a
+            >
+            ${
+              config.homeUrl
+                ? html`<a part="home link widget" href=${config.homeUrl}>${r(config.homeText)}</a>`
+                : html`<div part="home widget">${r(config.homeText)}</div>`
+            }
+            <a part="random link widget" href=${getRandom(config)?.url ?? ""}
+              >${r(config.strings.random)}</a
+            >
+            <a part="next link widget" rel="next" href=${getNext(config)?.url ?? ""}
+              >${r(config.strings.next)}</a
+            >
+          `;
+        },
       })}
     `;
   }

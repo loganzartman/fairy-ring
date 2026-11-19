@@ -51,7 +51,7 @@ function section(name: string, s: JSONSchema): TemplateResult {
     }`;
 }
 
-const example = `version = "0.0"
+const example = `configVersion = 1
 name = { en = "Example ring", es = "Anillo de ejemplo" }
 homeUrl = "https://ring.example.com"
 

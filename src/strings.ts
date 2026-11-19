@@ -9,11 +9,8 @@ export const locStringSchema = z
 export type LocString = z.infer<typeof locStringSchema>;
 
 /** pick the most specific translation for the user's preferred locales. i.e. `en-US`, then `en`. default to first locale in object. */
-export function localize(
-  string: LocString,
-  locales: readonly string[] = navigator.languages,
-): string {
-  for (const tag of locales) {
+export function localize(string: LocString): string {
+  for (const tag of navigator.languages) {
     const parts = tag.split("-");
     for (let i = parts.length; i > 0; i--) {
       const hit = string[parts.slice(0, i).join("-")];
