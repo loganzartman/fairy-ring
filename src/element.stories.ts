@@ -3,6 +3,7 @@ import { html } from "lit";
 import { stringify } from "smol-toml";
 import { expect, waitFor } from "storybook/test";
 import type * as z from "zod/v4-mini";
+import { dedent } from "./docs/docs";
 import { define } from "./element";
 import type { configSchema, Site } from "./lib";
 
@@ -31,9 +32,11 @@ const meta: Meta<Args> = {
   parameters: {
     docs: {
       source: {
-        // stories inline the config as a data: URL; show a realistic one in the Code tab
-        transform: (code: string) =>
-          code.replace(
+        // stories inline the config as a data: URL. in the Code tab, show it as a TOML file
+        // in a comment and point config-url at a realistic URL instead.
+        transform: (code: string, { args }: { args: Args }) =>
+          `<!-- fairy-ring.toml\n${stringify(args.config).trim()}\n-->\n` +
+          dedent(code).replace(
             /config-url="data:[^"]*"/g,
             'config-url="https://your-site.example/fairy-ring.toml"',
           ),

@@ -74,8 +74,6 @@ configSchema.parse(parseToml(example));
 const meta: Meta = {
   title: "docs/config",
   tags: ["!test"],
-  // hide the addons panel (controls etc.); nothing to control on a docs page
-  parameters: { options: { showPanel: false } },
 };
 export default meta;
 
