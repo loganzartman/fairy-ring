@@ -36,10 +36,29 @@ use bleeding-edge web tooling to deliver a simple and fun developer and user exp
 
 ## development
 
-Install:
+Install [nvm](https://github.com/nvm-sh/nvm), then (in a new shell) the node version from `.nvmrc`:
+
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh | bash
+nvm install
+```
+
+Install pnpm with corepack (uses the version in `package.json`'s `packageManager`):
+
+```bash
+corepack enable pnpm
+```
+
+Install dependencies:
 
 ```bash
 pnpm i
+```
+
+Check changes before opening a PR (build, typecheck, lint, format):
+
+```bash
+pnpm pr-check
 ```
 
 Run storybook:
