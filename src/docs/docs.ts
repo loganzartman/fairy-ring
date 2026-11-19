@@ -44,12 +44,47 @@ export function storyLink(id: string, text: string): TemplateResult {
 }
 
 export const docsStyles: TemplateResult = html`<style>
+  :root {
+    color-scheme: light dark;
+    --fg: #222;
+    --bg: #fff;
+    --muted-bg: #f5f5f5;
+    --border: #ddd;
+    --link: #0969da;
+    --target: #fff3c4;
+    --hl-keyword: #6f42c1;
+    --hl-attr: #005cc5;
+    --hl-string: #22863a;
+    --hl-literal: #d73a49;
+    --hl-comment: #6a737d;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fg: #e6edf3;
+      --bg: #0d1117;
+      --muted-bg: #161b22;
+      --border: #30363d;
+      --link: #4493f8;
+      --target: #3d2e00;
+      --hl-keyword: #d2a8ff;
+      --hl-attr: #79c0ff;
+      --hl-string: #a5d6ff;
+      --hl-literal: #ff7b72;
+      --hl-comment: #8b949e;
+    }
+  }
+  body {
+    background: var(--bg);
+  }
+  a {
+    color: var(--link);
+  }
   article {
     font:
       15px/1.5 system-ui,
       sans-serif;
     max-width: 960px;
-    color: #222;
+    color: var(--fg);
   }
   h2 {
     font-size: 1.25em;
@@ -60,8 +95,8 @@ export const docsStyles: TemplateResult = html`<style>
     margin-top: 0;
   }
   h2:target {
-    background: #fff3c4;
-    outline: 0.25em solid #fff3c4;
+    background: var(--target);
+    outline: 0.25em solid var(--target);
   }
   table {
     border-collapse: collapse;
@@ -69,13 +104,13 @@ export const docsStyles: TemplateResult = html`<style>
   }
   th,
   td {
-    border: 1px solid #ddd;
+    border: 1px solid var(--border);
     padding: 0.4em 0.75em;
     text-align: left;
     vertical-align: top;
   }
   th {
-    background: #f5f5f5;
+    background: var(--muted-bg);
     font-weight: 600;
   }
   td:nth-child(-n + 2) {
@@ -88,34 +123,34 @@ export const docsStyles: TemplateResult = html`<style>
     font-size: 0.9em;
   }
   pre {
-    background: #f5f5f5;
-    border: 1px solid #ddd;
+    background: var(--muted-bg);
+    border: 1px solid var(--border);
     padding: 0.75em 1em;
     overflow-x: auto;
   }
   .hljs-section,
   .hljs-keyword {
-    color: #6f42c1;
+    color: var(--hl-keyword);
     font-weight: 600;
   }
   [class^="hljs-selector"] {
-    color: #6f42c1;
+    color: var(--hl-keyword);
   }
   .hljs-attr,
   .hljs-attribute,
   .hljs-name,
   .hljs-title {
-    color: #005cc5;
+    color: var(--hl-attr);
   }
   .hljs-string {
-    color: #22863a;
+    color: var(--hl-string);
   }
   .hljs-literal,
   .hljs-number,
   .hljs-built_in {
-    color: #d73a49;
+    color: var(--hl-literal);
   }
   .hljs-comment {
-    color: #6a737d;
+    color: var(--hl-comment);
   }
 </style>`;
