@@ -56,7 +56,7 @@ export default meta;
 export const Default: StoryObj<Args> = {
   args: {
     config: {
-      version: "0.0",
+      configVersion: 1,
       name: { en: "fairy ring" },
       sites: EXAMPLE_SITES,
     },

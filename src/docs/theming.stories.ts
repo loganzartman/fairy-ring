@@ -5,7 +5,7 @@ import { code, dedent, docsStyles } from "./docs";
 import { configSchema } from "../lib";
 
 const minimalConfig = `
-version = "0.0"
+configVersion = 1
 name = { en = "my webring" }
 
 [[sites]]

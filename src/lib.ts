@@ -25,7 +25,7 @@ export const siteSchema = z
 export type Site = z.infer<typeof siteSchema>;
 
 export const configSchema = z.object({
-  version: z.enum(["0.0"]).check(z.describe("config schema version")),
+  configVersion: z.union([z.literal(1)]).check(z.describe("config schema version")),
   name: z.nonoptional(locStringSchema).check(z.describe("name of this webring")),
   homeUrl: z.optional(z.url()).check(z.describe("a homepage for the webring, if one exists")),
   sites: z.array(siteSchema).check(z.describe("list sites in the webring")),
