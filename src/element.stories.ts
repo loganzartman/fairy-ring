@@ -18,10 +18,6 @@ function configUrl(config: ConfigInput): string {
   return `data:application/toml,${encodeURIComponent(stringify(config))}`;
 }
 
-function cssUrl(styles: string): string {
-  return `data:text/css,${encodeURIComponent(styles)}`;
-}
-
 const EXAMPLE_SITES = [
   { url: "https://example.com", scope: "host" },
   { url: CURRENT_PAGE, scope: "host" },
@@ -36,7 +32,7 @@ const meta: Meta<Args> = {
   play: async ({ canvasElement }) => {
     const el = canvasElement.querySelector("fairy-ring");
     await waitFor(() => {
-      expect(el?.shadowRoot?.querySelector(".prev, .error")).toBeTruthy();
+      expect(el?.querySelector('[data-fr="prev"], [data-fr="error"]')).toBeTruthy();
     });
   },
 };
@@ -46,53 +42,55 @@ export const Default: StoryObj<Args> = {
   args: {
     config: {
       version: "0.0",
-      name: { en: "Example ring" },
+      name: { en: "fairy ring" },
       sites: EXAMPLE_SITES,
     },
   },
 };
 
-export const ConfiguredStylesheet: StoryObj<Args> = {
-  args: {
-    config: {
-      version: "0.0",
-      name: { en: "Example ring" },
-      sites: [
-        { url: "https://example.com", scope: "host" },
-        { url: CURRENT_PAGE, scope: "host" },
-        { url: "https://example.org", scope: "host" },
-      ],
-      options: {
-        cssHref: cssUrl(`
-          :host {
-            font-family: sans-serif;
+/** target parts with [data-fr="..."] */
+export const Themed: StoryObj<Args> = {
+  args: Default.args,
+  render: ({ config }) => html`
+    <style>
+      .themed {
+        & [data-fr] {
+          padding: 0.25em 0.5em;
+        }
+        & [data-fr="home"] {
+          color: #6f42c1;
+          font-weight: bolder;
+        }
+        & a[data-fr] {
+          color: white;
+          background: #6f42c1;
+          box-shadow:
+            0 0 0 1px #ffffff,
+            0 0 0 3px #6f42c1;
+          text-decoration: none;
+
+          &:hover {
+            background: #8a63d2;
           }
-          a {
-            color: inherit;
-            text-decoration: none;
-          }
-          .button {
-            padding: 0.5em 1em;
-          }
-          .button--clickable {
-            text-decoration: underline dotted;
-          }
-          .prev {
-            background: #8ff;
-            &::before {
-              display: 'inline-block';
-              content: '<- ';
-            }
-          }
-          .next {
-            background: #ff8;
-            &::after {
-              display: 'inline-block';
-              content: ' ->';
-            }
-          }
-        `),
-      },
-    },
-  },
+        }
+      }
+    </style>
+    <fairy-ring class="themed" config-url=${configUrl(config)}></fairy-ring>
+  `,
+};
+
+/** rearrange parts by redefining the grid areas: prev/home/random/next */
+export const Layout: StoryObj<Args> = {
+  args: Default.args,
+  render: ({ config }) => html`
+    <style>
+      .stacked {
+        grid-template-areas:
+          "home home home"
+          "prev random next";
+        justify-items: center;
+      }
+    </style>
+    <fairy-ring class="stacked" config-url=${configUrl(config)}></fairy-ring>
+  `,
 };

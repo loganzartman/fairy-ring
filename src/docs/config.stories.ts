@@ -53,6 +53,7 @@ function section(name: string, s: JSONSchema): TemplateResult {
 
 const example = `version = "0.0"
 name = { en = "Example ring", es = "Anillo de ejemplo" }
+homeUrl = "https://ring.example.com"
 
 [[sites]]
 url = "https://alice.example.com"
@@ -61,11 +62,6 @@ scope = "host"
 [[sites]]
 url = "https://example.org/~bob/"
 scope = "path"
-
-[options]
-homeUrl = "https://ring.example.com"
-showRandom = true
-cssHref = "https://ring.example.com/fairy-ring.css"
 
 [strings]
 next = { en = "next →", es = "siguiente →" }

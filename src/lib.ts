@@ -25,35 +25,26 @@ export type Site = z.infer<typeof siteSchema>;
 export const configSchema = z.object({
   version: z.enum(["0.0"]).check(z.describe("config schema version")),
   name: z.nonoptional(locStringSchema).check(z.describe("name of this webring")),
+  homeUrl: z.optional(z.url()).check(z.describe("a homepage for the webring, if one exists")),
   sites: z.array(siteSchema).check(z.describe("list sites in the webring")),
-  options: z.prefault(
-    z
-      .object({
-        homeUrl: z.optional(z.url()).check(z.describe("a homepage for the webring, if one exists")),
-        showRandom: z._default(z.boolean(), true).check(z.describe('enable the "random" button')),
-        cssHref: z
-          .optional(z.url())
-          .check(z.describe("suggested stylesheet; loaded unless disabled by site developer")),
-      })
-      .check(z.meta({ id: "Options" })),
-    {},
-  ),
-  strings: z.prefault(
-    z
-      .object({
-        next: z
-          ._default(locStringSchema, defaultNextString)
-          .check(z.describe("link to the next site")),
-        previous: z
-          ._default(locStringSchema, defaultPrevString)
-          .check(z.describe("link to the previous site")),
-        random: z
-          ._default(locStringSchema, defaultRandomString)
-          .check(z.describe("link to a random site")),
-      })
-      .check(z.meta({ id: "Strings" })),
-    {},
-  ),
+  strings: z
+    .prefault(
+      z
+        .object({
+          next: z
+            ._default(locStringSchema, defaultNextString)
+            .check(z.describe("link to the next site")),
+          previous: z
+            ._default(locStringSchema, defaultPrevString)
+            .check(z.describe("link to the previous site")),
+          random: z
+            ._default(locStringSchema, defaultRandomString)
+            .check(z.describe("link to a random site")),
+        })
+        .check(z.meta({ id: "Strings" })),
+      {},
+    )
+    .check(z.describe("overrides for built-in translations")),
 });
 export type Config = z.infer<typeof configSchema>;
 
