@@ -9,6 +9,7 @@ import {
 import { impossible } from "./impossible";
 
 export { localize, type LocString } from "./strings";
+export { renderTemplate } from "./template";
 
 export const siteSchema = z
   .object({
@@ -27,6 +28,9 @@ export type Site = z.infer<typeof siteSchema>;
 export const configSchema = z.object({
   configVersion: z.union([z.literal(1)]).check(z.describe("config schema version")),
   name: z.nonoptional(locStringSchema).check(z.describe("name of this webring")),
+  homeText: z
+    ._default(locStringSchema, { und: "{{name}}" })
+    .check(z.describe("text that links to the homepage. defaults to the webring name.")),
   homeUrl: z.optional(z.url()).check(z.describe("a homepage for the webring, if one exists")),
   sites: z.array(siteSchema).check(z.describe("list sites in the webring")),
   strings: z
