@@ -4,7 +4,6 @@ export default defineConfig([
   // library exports
   {
     entry: {
-      index: "src/index.ts",
       element: "src/element.ts",
       lib: "src/lib.ts",
       react: "src/react.ts",
