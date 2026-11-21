@@ -1,5 +1,11 @@
 # fairy-ring
 
+## 0.2.3
+
+### Patch Changes
+
+- 3e1bfad: remove the empty root index entrypoint
+
 ## 0.2.2
 
 ### Patch Changes
