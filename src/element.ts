@@ -88,3 +88,9 @@ export function define(tagName = "fairy-ring"): void {
   if (customElements.get(tagName)) return;
   customElements.define(tagName, FairyRingElement);
 }
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "fairy-ring": FairyRingElement;
+  }
+}
