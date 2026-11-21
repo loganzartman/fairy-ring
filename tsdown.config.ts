@@ -24,5 +24,6 @@ export default defineConfig([
     minify: true,
     clean: false,
     deps: { alwaysBundle: [/.*/], onlyBundle: false },
+    outputOptions: { comments: false },
   },
 ]);
