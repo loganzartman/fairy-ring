@@ -1,5 +1,11 @@
 # fairy-ring
 
+## 0.2.4
+
+### Patch Changes
+
+- 97323df: strip comments from the standalone bundle
+
 ## 0.2.3
 
 ### Patch Changes
