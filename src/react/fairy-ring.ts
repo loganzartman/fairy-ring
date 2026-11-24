@@ -1,5 +1,5 @@
 import { createElement, type ClassAttributes, type HTMLAttributes, type ReactElement } from "react";
-import { define, type FairyRingElement } from "./element";
+import { define, type FairyRingElement } from "../element/fairy-ring";
 
 export type FairyRingProps = Omit<
   HTMLAttributes<FairyRingElement> & ClassAttributes<FairyRingElement>,

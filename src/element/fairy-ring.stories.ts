@@ -3,9 +3,9 @@ import { html } from "lit";
 import { stringify } from "smol-toml";
 import { expect, waitFor } from "storybook/test";
 import type * as z from "zod/v4-mini";
-import { dedent } from "./docs/docs";
-import { define } from "./element";
-import type { configSchema, Site } from "./lib";
+import { dedent } from "../docs/docs";
+import { define } from "./fairy-ring";
+import type { configSchema, Site } from "../lib";
 
 const CURRENT_PAGE = `${document.location.protocol}//${document.location.host}`;
 

@@ -1,8 +1,6 @@
-import { createElement } from "react";
-import { createRoot } from "react-dom/client";
 import { afterEach, expect, test } from "vitest";
-import { FairyRingElement } from "./element";
-import { FairyRing, type FairyRingProps } from "./react";
+import { createApp, defineComponent, h, nextTick, ref } from "vue";
+import { FairyRingElement } from "../element/fairy-ring";
 import {
   createMount,
   DEFAULT_CONFIG_URL,
@@ -12,9 +10,10 @@ import {
   THEMED_CSS,
   UPDATED_CONFIG_URL,
   waitForLoaded,
-} from "./test-utils";
+} from "../test-utils";
+import { FairyRing, type FairyRingProps } from "./fairy-ring";
 
-type ReactTestProps = FairyRingProps & { "data-test"?: string };
+type VueTestProps = FairyRingProps & Record<string, unknown>;
 
 const cleanups: (() => void)[] = [];
 
@@ -23,17 +22,27 @@ afterEach(() => {
   document.body.replaceChildren();
 });
 
-function mountReact(props: ReactTestProps, css?: string) {
+function mountVue(initialProps: VueTestProps, css?: string) {
   const mount = createMount(css);
-  const root = createRoot(mount);
-  const update = (next: ReactTestProps) => root.render(createElement(FairyRing, next));
-  update(props);
-  cleanups.push(() => root.unmount());
-  return { mount, update };
+  const state = ref(initialProps);
+  const app = createApp(
+    defineComponent({
+      setup: () => () => h(FairyRing, state.value),
+    }),
+  );
+  app.mount(mount);
+  cleanups.push(() => app.unmount());
+  return {
+    mount,
+    async update(next: VueTestProps) {
+      state.value = next;
+      await nextTick();
+    },
+  };
 }
 
 test("default render matches element screenshot and DOM", async () => {
-  const { mount } = mountReact({ configUrl: DEFAULT_CONFIG_URL });
+  const { mount } = mountVue({ configUrl: DEFAULT_CONFIG_URL });
   const el = await waitForLoaded(mount);
 
   expect(el).toBeInstanceOf(FairyRingElement);
@@ -50,7 +59,7 @@ test("themed render matches element screenshot and DOM", async () => {
   const baseline = await getBaseline("themed");
   expect(baseline.screenshot).not.toBe(defaultBaseline.screenshot);
 
-  const { mount } = mountReact({ configUrl: DEFAULT_CONFIG_URL, className: "themed" }, THEMED_CSS);
+  const { mount } = mountVue({ configUrl: DEFAULT_CONFIG_URL, class: "themed" }, THEMED_CSS);
   const el = await waitForLoaded(mount);
 
   expect(summarizeElement(el)).toEqual(baseline.summary);
@@ -58,17 +67,17 @@ test("themed render matches element screenshot and DOM", async () => {
 });
 
 test("updates reactively when configUrl changes", async () => {
-  const { mount, update } = mountReact({ configUrl: DEFAULT_CONFIG_URL });
+  const { mount, update } = mountVue({ configUrl: DEFAULT_CONFIG_URL });
   await waitForLoaded(mount);
 
-  update({ configUrl: UPDATED_CONFIG_URL });
+  await update({ configUrl: UPDATED_CONFIG_URL });
   const el = await waitForLoaded(mount, "second ring");
   expect(el.getAttribute("config-url")).toBe(UPDATED_CONFIG_URL);
   expect(el.configUrl).toBe(UPDATED_CONFIG_URL);
 });
 
 test("forwards HTML attributes", async () => {
-  const { mount } = mountReact({
+  const { mount } = mountVue({
     configUrl: DEFAULT_CONFIG_URL,
     id: "my-ring",
     hidden: true,
@@ -84,15 +93,24 @@ test("forwards HTML attributes", async () => {
   expect(el.getAttribute("data-test")).toBe("ring");
 });
 
-test("forwards ref to FairyRingElement", async () => {
-  let refEl: FairyRingElement | null = null;
-  const { mount } = mountReact({
-    configUrl: DEFAULT_CONFIG_URL,
-    ref: (el) => {
-      refEl = el;
-    },
-  });
+test("accepts kebab-case config-url and class object/array bindings", async () => {
+  const mount = createMount();
+  const active = ref(true);
+  const app = createApp(
+    defineComponent({
+      setup: () => () =>
+        h(FairyRing, {
+          "config-url": DEFAULT_CONFIG_URL,
+          class: ["base", { themed: active.value }],
+        } as never),
+    }),
+  );
+  app.mount(mount);
+  cleanups.push(() => app.unmount());
 
   const el = await waitForLoaded(mount);
-  expect(refEl).toBe(el);
+  expect(el.className).toBe("base themed");
+  active.value = false;
+  await nextTick();
+  expect(el.className).toBe("base");
 });

@@ -1,6 +1,6 @@
 import { dynamic, isServer, type JSX } from "@solidjs/web";
 import { merge, omit } from "solid-js";
-import { define, type FairyRingElement } from "./element";
+import { define, type FairyRingElement } from "../element/fairy-ring";
 
 export type FairyRingProps = Omit<JSX.HTMLAttributes<FairyRingElement>, "children"> & {
   configUrl: string;

@@ -4,11 +4,11 @@ export default defineConfig([
   // library exports
   {
     entry: {
-      element: "src/element.ts",
+      element: "src/element/index.ts",
       lib: "src/lib.ts",
-      react: "src/react.ts",
-      vue: "src/vue.ts",
-      solid: "src/solid.ts",
+      react: "src/react/index.ts",
+      vue: "src/vue/index.ts",
+      solid: "src/solid/index.ts",
     },
     format: "esm",
     platform: "browser",

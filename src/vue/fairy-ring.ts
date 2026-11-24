@@ -1,5 +1,5 @@
 import { defineComponent, h } from "vue";
-import { define } from "./element";
+import { define } from "../element/fairy-ring";
 
 export interface FairyRingProps {
   configUrl: string;

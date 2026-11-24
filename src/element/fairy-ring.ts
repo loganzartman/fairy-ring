@@ -1,9 +1,9 @@
 import { Task } from "@lit/task";
 import { css, html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
-import { fetchConfig, getNext, getPrev, getRandom, logConfigErrors } from "./lib";
-import { defaultErrorString, defaultLoadingString, type LocString } from "./strings";
-import { renderTemplate } from "./template";
+import { fetchConfig, getNext, getPrev, getRandom, logConfigErrors } from "../lib";
+import { defaultErrorString, defaultLoadingString, type LocString } from "../strings";
+import { renderTemplate } from "../template";
 
 export class FairyRingElement extends LitElement {
   @property({ attribute: "config-url" }) configUrl?: string;

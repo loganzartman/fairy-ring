@@ -1,8 +1,8 @@
 import { render } from "@solidjs/web";
 import { createComponent, createSignal, createStore, flush } from "solid-js";
 import { afterEach, expect, test } from "vitest";
-import { FairyRingElement } from "./element";
-import { FairyRing, type FairyRingProps } from "./solid";
+import { FairyRingElement } from "../element/fairy-ring";
+import { FairyRing, type FairyRingProps } from "./fairy-ring";
 import {
   createMount,
   DEFAULT_CONFIG_URL,
@@ -12,7 +12,7 @@ import {
   THEMED_CSS,
   UPDATED_CONFIG_URL,
   waitForLoaded,
-} from "./test-utils";
+} from "../test-utils";
 
 type SolidTestProps = FairyRingProps & { "data-test"?: string };
 
