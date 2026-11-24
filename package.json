@@ -61,18 +61,21 @@
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",
+    "@solidjs/web": "^2.0.3",
     "@storybook/addon-docs": "10.6.7",
     "@storybook/addon-vitest": "^10.6.7",
     "@storybook/web-components-vite": "^10.6.7",
     "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "@vitest/browser-playwright": "^5.1.1",
     "highlight.js": "^11.12.0",
     "oxfmt": "^0.79.0",
     "oxlint": "^1.94.0",
     "playwright": "^1.65.1",
     "react": "^19.3.1",
-    "solid-js": "^2.0.0",
+    "react-dom": "^19.3.1",
+    "solid-js": "^2.0.3",
     "storybook": "^10.6.7",
     "tsdown": "^0.23.7",
     "typescript": "7.1.0-beta",
@@ -81,11 +84,15 @@
     "vue": "^3.5.45"
   },
   "peerDependencies": {
+    "@solidjs/web": "^2.0.0",
     "react": "^19.0.0",
     "solid-js": "^2.0.0",
     "vue": "^3.5.0"
   },
   "peerDependenciesMeta": {
+    "@solidjs/web": {
+      "optional": true
+    },
     "react": {
       "optional": true
     },
