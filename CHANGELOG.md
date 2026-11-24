@@ -1,5 +1,11 @@
 # fairy-ring
 
+## 0.2.5
+
+### Patch Changes
+
+- 9177c00: accept `configUrl` and HTML attributes in the React, Solid, and Vue wrappers
+
 ## 0.2.4
 
 ### Patch Changes
