@@ -1,4 +1,14 @@
 minimumReleaseAge: 1440
 
+supportedArchitectures:
+  os:
+    - current
+    - linux
+  cpu:
+    - current
+  libc:
+    - current
+    - glibc
+
 allowBuilds:
   esbuild: false
