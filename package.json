@@ -1,8 +1,8 @@
 {
   "name": "fairy-ring",
   "version": "0.2.5",
-  "description": "",
-  "license": "ISC",
+  "description": "create webrings",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/loganzartman/fairy-ring.git"
